@@ -6,107 +6,318 @@
   <title>Student Result Management System</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f0f2f5; }
-    .container { max-width: 900px; margin: 30px auto; padding: 20px; }
-    h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .auth-container {
+      display: flex; justify-content: center;
+      align-items: center; min-height: 100vh;
+    }
+    .auth-card {
+      background: white; padding: 40px;
+      border-radius: 15px; width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .auth-card h1 {
+      text-align: center; color: #2c3e50;
+      margin-bottom: 10px; font-size: 24px;
+    }
+    .auth-card p {
+      text-align: center; color: #7f8c8d;
+      margin-bottom: 30px; font-size: 14px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; margin-bottom: 8px;
+      color: #2c3e50; font-weight: bold;
+      font-size: 14px;
+    }
+    .form-group input {
+      width: 100%; padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px;
+      transition: border 0.3s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .btn {
+      width: 100%; padding: 12px;
+      border: none; border-radius: 8px;
+      font-size: 16px; cursor: pointer;
+      transition: all 0.3s; font-weight: bold;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; margin-bottom: 15px;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-link {
+      background: none; color: #667eea;
+      text-decoration: underline; font-size: 14px;
+      padding: 5px;
+    }
+    .switch-text {
+      text-align: center; color: #7f8c8d;
+      font-size: 14px;
+    }
+    .dashboard { display: none; }
+    .navbar {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 15px 30px;
+      display: flex; justify-content: space-between;
+      align-items: center; color: white;
+    }
+    .navbar h2 { font-size: 20px; }
+    .btn-logout {
+      background: rgba(255,255,255,0.2);
+      color: white; border: 2px solid white;
+      padding: 8px 20px; border-radius: 8px;
+      cursor: pointer; font-size: 14px;
+      transition: all 0.3s;
+    }
+    .btn-logout:hover { background: white; color: #667eea; }
+    .main-content { max-width: 950px; margin: 30px auto; padding: 0 20px; }
     .form-card {
       background: white; padding: 25px;
-      border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
       margin-bottom: 30px;
     }
+    .form-card h2 { color: #2c3e50; margin-bottom: 20px; }
     .form-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 15px; margin-bottom: 15px;
     }
-    input {
+    .form-grid input {
       width: 100%; padding: 10px;
-      border: 1px solid #ddd; border-radius: 5px;
-      font-size: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px;
     }
-    button {
-      background: #3498db; color: white;
-      padding: 12px 30px; border: none;
-      border-radius: 5px; cursor: pointer;
-      font-size: 16px; width: 100%;
+    .form-grid input:focus {
+      outline: none; border-color: #667eea;
     }
-    button:hover { background: #2980b9; }
+    .btn-add {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; padding: 12px 30px;
+      border: none; border-radius: 8px;
+      cursor: pointer; font-size: 16px;
+      width: 100%; font-weight: bold;
+    }
+    .btn-add:hover { opacity: 0.9; }
     table {
       width: 100%; border-collapse: collapse;
-      background: white; border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background: white; border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
       overflow: hidden;
     }
     th {
-      background: #2c3e50; color: white;
-      padding: 12px; text-align: left;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; padding: 15px;
+      text-align: left; font-size: 14px;
     }
-    td { padding: 12px; border-bottom: 1px solid #eee; }
-    tr:hover { background: #f8f9fa; }
-    .pass { color: green; font-weight: bold; }
-    .fail { color: red; font-weight: bold; }
+    td { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; }
+    tr:hover { background: #f8f9ff; }
+    .pass { color: #27ae60; font-weight: bold; }
+    .fail { color: #e74c3c; font-weight: bold; }
+    .badge {
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 12px; font-weight: bold;
+    }
+    .badge-pass { background: #d5f5e3; color: #27ae60; }
+    .badge-fail { background: #fadbd8; color: #e74c3c; }
     .delete-btn {
-      background: #e74c3c; padding: 6px 12px;
-      font-size: 12px; width: auto;
+      background: #e74c3c; color: white;
+      border: none; padding: 6px 14px;
+      border-radius: 6px; cursor: pointer;
+      font-size: 12px;
     }
     .delete-btn:hover { background: #c0392b; }
+    .error { color: #e74c3c; text-align: center; font-size: 14px; margin-top: 10px; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 15px; margin-bottom: 25px;
+    }
+    .stat-card {
+      background: white; padding: 20px;
+      border-radius: 15px; text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    .stat-card h3 { font-size: 28px; color: #667eea; }
+    .stat-card p { color: #7f8c8d; font-size: 14px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎓 Student Result Management System</h1>
 
-    <div class="form-card">
-      <h2 style="margin-bottom:20px; color:#2c3e50;">Add New Student</h2>
-      <div class="form-grid">
-        <input type="text" id="name" placeholder="Student Name" />
-        <input type="text" id="rollNumber" placeholder="Roll Number" />
-        <input type="number" id="subject1" placeholder="Subject 1 Marks (out of 100)" />
-        <input type="number" id="subject2" placeholder="Subject 2 Marks (out of 100)" />
-        <input type="number" id="subject3" placeholder="Subject 3 Marks (out of 100)" />
-        <input type="number" id="subject4" placeholder="Subject 4 Marks (out of 100)" />
-        <input type="number" id="subject5" placeholder="Subject 5 Marks (out of 100)" />
+  <!-- AUTH SECTION -->
+  <div class="auth-container" id="authSection">
+    <div class="auth-card">
+      <!-- Login Form -->
+      <div id="loginForm">
+        <h1>🎓 Welcome Back</h1>
+        <p>Student Result Management System</p>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password" />
+        </div>
+        <button class="btn btn-primary" onclick="login()">Login</button>
+        <div class="switch-text">
+          Don't have an account?
+          <button class="btn btn-link" onclick="showRegister()">Register here</button>
+        </div>
+        <p class="error" id="loginError"></p>
       </div>
-      <button onclick="addStudent()">Add Student</button>
+
+      <!-- Register Form -->
+      <div id="registerForm" style="display:none;">
+        <h1>📝 Create Account</h1>
+        <p>Register as an admin</p>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="regUsername" placeholder="Choose username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" placeholder="Choose password" />
+        </div>
+        <button class="btn btn-primary" onclick="register()">Register</button>
+        <div class="switch-text">
+          Already have an account?
+          <button class="btn btn-link" onclick="showLogin()">Login here</button>
+        </div>
+        <p class="error" id="registerError"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD SECTION -->
+  <div class="dashboard" id="dashboard">
+    <div class="navbar">
+      <h2>🎓 Student Result Management System</h2>
+      <button class="btn-logout" onclick="logout()">Logout</button>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Roll No</th>
-          <th>Percentage</th>
-          <th>Grade</th>
-          <th>Result</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="studentTable"></tbody>
-    </table>
+    <div class="main-content">
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat-card">
+          <h3 id="totalStudents">0</h3>
+          <p>Total Students</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalPass">0</h3>
+          <p>Passed</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalFail">0</h3>
+          <p>Failed</p>
+        </div>
+      </div>
+
+      <!-- Add Student Form -->
+      <div class="form-card">
+        <h2>➕ Add New Student</h2>
+        <div class="form-grid">
+          <input type="text" id="name" placeholder="Student Name" />
+          <input type="text" id="rollNumber" placeholder="Roll Number" />
+          <input type="number" id="subject1" placeholder="Subject 1 (out of 100)" />
+          <input type="number" id="subject2" placeholder="Subject 2 (out of 100)" />
+          <input type="number" id="subject3" placeholder="Subject 3 (out of 100)" />
+          <input type="number" id="subject4" placeholder="Subject 4 (out of 100)" />
+          <input type="number" id="subject5" placeholder="Subject 5 (out of 100)" />
+        </div>
+        <button class="btn-add" onclick="addStudent()">Add Student</button>
+      </div>
+
+      <!-- Students Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Percentage</th>
+            <th>Grade</th>
+            <th>Result</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="studentTable"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
-    const API = 'http://localhost:5000/api/students';
+    const API = 'http://localhost:5000/api';
+    let token = localStorage.getItem('token');
 
-    async function loadStudents() {
-      const res = await fetch(API);
-      const students = await res.json();
-      const tbody = document.getElementById('studentTable');
-      tbody.innerHTML = '';
-      students.forEach(s => {
-        const total = s.subject1 + s.subject2 + s.subject3 + s.subject4 + s.subject5;
-        const percentage = ((total / 500) * 100).toFixed(2);
-        const grade = getGrade(percentage);
-        const result = percentage >= 40 ? 'Pass' : 'Fail';
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.name}</td>
-            <td>${s.rollNumber}</td>
-            <td>${percentage}%</td>
-            <td>${grade}</td>
-            <td class="${result.toLowerCase()}">${result}</td>
-            <td><button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button></td>
-          </tr>`;
+    // Page load pe check karo token hai ke nahi
+    window.onload = () => {
+      if (token) showDashboard();
+    };
+
+    function showRegister() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'block';
+    }
+
+    function showLogin() {
+      document.getElementById('registerForm').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'block';
+    }
+
+    async function register() {
+      const username = document.getElementById('regUsername').value;
+      const password = document.getElementById('regPassword').value;
+      const res = await fetch(`${API}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
       });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Registered successfully! Please login.');
+        showLogin();
+      } else {
+        document.getElementById('registerError').textContent = data.message;
+      }
+    }
+
+    async function login() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      const res = await fetch(`${API}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        token = data.token;
+        localStorage.setItem('token', token);
+        showDashboard();
+      } else {
+        document.getElementById('loginError').textContent = data.message;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      token = null;
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('authSection').style.display = 'flex';
+    }
+
+    function showDashboard() {
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadStudents();
     }
 
     function getGrade(percentage) {
@@ -116,6 +327,37 @@
       if (percentage >= 60) return 'B';
       if (percentage >= 50) return 'C';
       return 'F';
+    }
+
+    async function loadStudents() {
+      const res = await fetch(`${API}/students`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const students = await res.json();
+      const tbody = document.getElementById('studentTable');
+      tbody.innerHTML = '';
+
+      let pass = 0, fail = 0;
+      students.forEach(s => {
+        const total = s.subject1 + s.subject2 + s.subject3 + s.subject4 + s.subject5;
+        const percentage = ((total / 500) * 100).toFixed(2);
+        const grade = getGrade(percentage);
+        const result = percentage >= 40 ? 'Pass' : 'Fail';
+        if (result === 'Pass') pass++; else fail++;
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.rollNumber}</td>
+            <td>${percentage}%</td>
+            <td>${grade}</td>
+            <td><span class="badge badge-${result.toLowerCase()}">${result}</span></td>
+            <td><button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button></td>
+          </tr>`;
+      });
+
+      document.getElementById('totalStudents').textContent = students.length;
+      document.getElementById('totalPass').textContent = pass;
+      document.getElementById('totalFail').textContent = fail;
     }
 
     async function addStudent() {
@@ -128,20 +370,24 @@
         subject4: Number(document.getElementById('subject4').value),
         subject5: Number(document.getElementById('subject5').value),
       };
-      await fetch(API, {
+      await fetch(`${API}/students`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(data)
       });
       loadStudents();
     }
 
     async function deleteStudent(id) {
-      await fetch(`${API}/${id}`, { method: 'DELETE' });
+      await fetch(`${API}/students/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       loadStudents();
     }
-
-    loadStudents();
   </script>
 </body>
 </html>
