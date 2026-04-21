@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Result Management System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f0f2f5; }
+    .container { max-width: 900px; margin: 30px auto; padding: 20px; }
+    h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+    .form-card {
+      background: white; padding: 25px;
+      border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 15px; margin-bottom: 15px;
+    }
+    input {
+      width: 100%; padding: 10px;
+      border: 1px solid #ddd; border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      background: #3498db; color: white;
+      padding: 12px 30px; border: none;
+      border-radius: 5px; cursor: pointer;
+      font-size: 16px; width: 100%;
+    }
+    button:hover { background: #2980b9; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: white; border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    th {
+      background: #2c3e50; color: white;
+      padding: 12px; text-align: left;
+    }
+    td { padding: 12px; border-bottom: 1px solid #eee; }
+    tr:hover { background: #f8f9fa; }
+    .pass { color: green; font-weight: bold; }
+    .fail { color: red; font-weight: bold; }
+    .delete-btn {
+      background: #e74c3c; padding: 6px 12px;
+      font-size: 12px; width: auto;
+    }
+    .delete-btn:hover { background: #c0392b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 Student Result Management System</h1>
+
+    <div class="form-card">
+      <h2 style="margin-bottom:20px; color:#2c3e50;">Add New Student</h2>
+      <div class="form-grid">
+        <input type="text" id="name" placeholder="Student Name" />
+        <input type="text" id="rollNumber" placeholder="Roll Number" />
+        <input type="number" id="subject1" placeholder="Subject 1 Marks (out of 100)" />
+        <input type="number" id="subject2" placeholder="Subject 2 Marks (out of 100)" />
+        <input type="number" id="subject3" placeholder="Subject 3 Marks (out of 100)" />
+        <input type="number" id="subject4" placeholder="Subject 4 Marks (out of 100)" />
+        <input type="number" id="subject5" placeholder="Subject 5 Marks (out of 100)" />
+      </div>
+      <button onclick="addStudent()">Add Student</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Percentage</th>
+          <th>Grade</th>
+          <th>Result</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="studentTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const API = 'http://localhost:5000/api/students';
+
+    async function loadStudents() {
+      const res = await fetch(API);
+      const students = await res.json();
+      const tbody = document.getElementById('studentTable');
+      tbody.innerHTML = '';
+      students.forEach(s => {
+        const total = s.subject1 + s.subject2 + s.subject3 + s.subject4 + s.subject5;
+        const percentage = ((total / 500) * 100).toFixed(2);
+        const grade = getGrade(percentage);
+        const result = percentage >= 40 ? 'Pass' : 'Fail';
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.rollNumber}</td>
+            <td>${percentage}%</td>
+            <td>${grade}</td>
+            <td class="${result.toLowerCase()}">${result}</td>
+            <td><button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button></td>
+          </tr>`;
+      });
+    }
+
+    function getGrade(percentage) {
+      if (percentage >= 90) return 'A+';
+      if (percentage >= 80) return 'A';
+      if (percentage >= 70) return 'B+';
+      if (percentage >= 60) return 'B';
+      if (percentage >= 50) return 'C';
+      return 'F';
+    }
+
+    async function addStudent() {
+      const data = {
+        name: document.getElementById('name').value,
+        rollNumber: document.getElementById('rollNumber').value,
+        subject1: Number(document.getElementById('subject1').value),
+        subject2: Number(document.getElementById('subject2').value),
+        subject3: Number(document.getElementById('subject3').value),
+        subject4: Number(document.getElementById('subject4').value),
+        subject5: Number(document.getElementById('subject5').value),
+      };
+      await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      loadStudents();
+    }
+
+    async function deleteStudent(id) {
+      await fetch(`${API}/${id}`, { method: 'DELETE' });
+      loadStudents();
+    }
+
+    loadStudents();
+  </script>
+</body>
+</html>
