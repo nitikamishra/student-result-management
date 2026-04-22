@@ -136,6 +136,14 @@
       font-size: 12px;
     }
     .delete-btn:hover { background: #c0392b; }
+    .download-btn {
+      background: #27ae60; color: white;
+      border: none; padding: 6px 14px;
+      border-radius: 6px; cursor: pointer;
+      font-size: 12px; margin-left: 5px;
+    }
+    .download-btn:hover { background: #219a52; }
+        
     .error { color: #e74c3c; text-align: center; font-size: 14px; margin-top: 10px; }
     .stats {
       display: grid; grid-template-columns: repeat(3, 1fr);
@@ -363,7 +371,10 @@
             <td>${percentage}%</td>
             <td>${grade}</td>
             <td><span class="badge badge-${result.toLowerCase()}">${result}</span></td>
-            <td><button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button></td>
+            <td>
+              <button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button>
+              <button class="download-btn" onclick="downloadResult('${s._id}')">📄 Result</button>
+            </td>
           </tr>`;
       });
 
@@ -417,6 +428,9 @@
       const data = await res.json();
       document.getElementById('importMessage').textContent = data.message;
       loadStudents();
+    }
+    function downloadResult(id) {
+      window.open(`${API}/result/${id}?token=${token}`, '_blank');
     }
   </script>
 </body>

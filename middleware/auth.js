@@ -2,7 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const protect = (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
+    let token = req.headers.authorization?.split(' ')[1];
+
+    // Query parameter se bhi token lo (PDF download ke liye)
+    if (!token && req.query.token) {
+      token = req.query.token;
+    }
 
     if (!token) {
       return res.status(401).json({ message: 'No token, access denied' });

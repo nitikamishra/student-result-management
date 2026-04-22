@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
 const authRoutes = require('./routes/authRoutes');
 const importRoutes = require('./routes/importRoutes');
+const pdfRoutes = require('./routes/pdfRoutes');
 
 dotenv.config();
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 app.use('/api/students', studentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/import', importRoutes);
+app.use('/api/result', pdfRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
