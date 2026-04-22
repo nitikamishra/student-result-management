@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const importRoutes = require('./routes/importRoutes');
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,7 @@ app.use(express.static('public'));
 
 app.use('/api/students', studentRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/import', importRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

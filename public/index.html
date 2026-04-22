@@ -220,6 +220,18 @@
           <p>Failed</p>
         </div>
       </div>
+      <!-- Import Excel -->
+      <div class="form-card">
+        <h2>📊 Import Students from Excel</h2>
+        <p style="color:#7f8c8d; margin-bottom:15px; font-size:14px;">
+          Excel file mein columns hone chahiye: Name, Roll Number, Subject1, Subject2, Subject3, Subject4, Subject5
+        </p>
+        <input type="file" id="excelFile" accept=".xlsx"
+          style="margin-bottom:15px; padding:10px; border:2px dashed #667eea;
+          border-radius:8px; width:100%; cursor:pointer;" />
+        <button class="btn-add" onclick="importExcel()">📥 Import Excel</button>
+        <p id="importMessage" style="margin-top:10px; color:#27ae60; font-weight:bold;"></p>
+      </div>
 
       <!-- Add Student Form -->
       <div class="form-card">
@@ -386,6 +398,24 @@
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      loadStudents();
+    }
+    async function importExcel() {
+      const file = document.getElementById('excelFile').files[0];
+      if (!file) {
+        alert('Pehle Excel file select karo!');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch(`${API}/import`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('importMessage').textContent = data.message;
       loadStudents();
     }
   </script>
