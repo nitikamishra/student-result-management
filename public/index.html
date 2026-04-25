@@ -6,164 +6,77 @@
   <title>Student Result Management System</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-    }
-    .auth-container {
-      display: flex; justify-content: center;
-      align-items: center; min-height: 100vh;
-    }
-    .auth-card {
-      background: white; padding: 40px;
-      border-radius: 15px; width: 400px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-    .auth-card h1 {
-      text-align: center; color: #2c3e50;
-      margin-bottom: 10px; font-size: 24px;
-    }
-    .auth-card p {
-      text-align: center; color: #7f8c8d;
-      margin-bottom: 30px; font-size: 14px;
-    }
+    body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+    .auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .auth-card { background: white; padding: 40px; border-radius: 15px; width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .auth-card h1 { text-align: center; color: #2c3e50; margin-bottom: 10px; font-size: 24px; }
+    .auth-card p { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-size: 14px; }
     .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block; margin-bottom: 8px;
-      color: #2c3e50; font-weight: bold;
-      font-size: 14px;
+    .form-group label { display: block; margin-bottom: 8px; color: #2c3e50; font-weight: bold; font-size: 14px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 12px; border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px; transition: border 0.3s;
     }
-    .form-group input {
-      width: 100%; padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px; font-size: 14px;
-      transition: border 0.3s;
-    }
-    .form-group input:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-    .btn {
-      width: 100%; padding: 12px;
-      border: none; border-radius: 8px;
-      font-size: 16px; cursor: pointer;
-      transition: all 0.3s; font-weight: bold;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white; margin-bottom: 15px;
-    }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; }
+    .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; margin-bottom: 15px; }
     .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-link {
-      background: none; color: #667eea;
-      text-decoration: underline; font-size: 14px;
-      padding: 5px;
-    }
-    .switch-text {
-      text-align: center; color: #7f8c8d;
-      font-size: 14px;
-    }
+    .btn-link { background: none; color: #667eea; text-decoration: underline; font-size: 14px; padding: 5px; }
+    .switch-text { text-align: center; color: #7f8c8d; font-size: 14px; }
     .dashboard { display: none; }
-    .navbar {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      padding: 15px 30px;
-      display: flex; justify-content: space-between;
-      align-items: center; color: white;
-    }
+    .navbar { background: linear-gradient(135deg, #667eea, #764ba2); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; }
     .navbar h2 { font-size: 20px; }
-    .btn-logout {
-      background: rgba(255,255,255,0.2);
-      color: white; border: 2px solid white;
-      padding: 8px 20px; border-radius: 8px;
-      cursor: pointer; font-size: 14px;
-      transition: all 0.3s;
-    }
+    .btn-logout { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; }
     .btn-logout:hover { background: white; color: #667eea; }
-    .main-content { max-width: 950px; margin: 30px auto; padding: 0 20px; }
-    .form-card {
-      background: white; padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
+    .main-content { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+    .form-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 30px; }
     .form-card h2 { color: #2c3e50; margin-bottom: 20px; }
-    .form-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 15px; margin-bottom: 15px;
-    }
-    .form-grid input {
-      width: 100%; padding: 10px;
-      border: 2px solid #e0e0e0;
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    .form-grid input, .form-grid select {
+      width: 100%; padding: 10px; border: 2px solid #e0e0e0;
       border-radius: 8px; font-size: 14px;
     }
-    .form-grid input:focus {
-      outline: none; border-color: #667eea;
-    }
-    .btn-add {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white; padding: 12px 30px;
-      border: none; border-radius: 8px;
-      cursor: pointer; font-size: 16px;
-      width: 100%; font-weight: bold;
-    }
+    .form-grid input:focus, .form-grid select:focus { outline: none; border-color: #667eea; }
+    .btn-add { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
     .btn-add:hover { opacity: 0.9; }
-    table {
-      width: 100%; border-collapse: collapse;
-      background: white; border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    th {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white; padding: 15px;
-      text-align: left; font-size: 14px;
-    }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); overflow: hidden; }
+    th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; text-align: left; font-size: 14px; }
     td { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; }
     tr:hover { background: #f8f9ff; }
     .pass { color: #27ae60; font-weight: bold; }
     .fail { color: #e74c3c; font-weight: bold; }
-    .badge {
-      padding: 4px 10px; border-radius: 20px;
-      font-size: 12px; font-weight: bold;
-    }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
     .badge-pass { background: #d5f5e3; color: #27ae60; }
     .badge-fail { background: #fadbd8; color: #e74c3c; }
-    .delete-btn {
-      background: #e74c3c; color: white;
-      border: none; padding: 6px 14px;
-      border-radius: 6px; cursor: pointer;
-      font-size: 12px;
-    }
+    .delete-btn { background: #e74c3c; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; margin: 2px; }
     .delete-btn:hover { background: #c0392b; }
-    .download-btn {
-      background: #27ae60; color: white;
-      border: none; padding: 6px 14px;
-      border-radius: 6px; cursor: pointer;
-      font-size: 12px; margin-left: 5px;
-    }
+    .download-btn { background: #27ae60; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; margin: 2px; }
     .download-btn:hover { background: #219a52; }
-
-    .edit-btn {
-      background: #f39c12; color: white;
-      border: none; padding: 6px 14px;
-      border-radius: 6px; cursor: pointer;
-      font-size: 12px; margin-left: 5px;
-    }
+    .edit-btn { background: #f39c12; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; margin: 2px; }
     .edit-btn:hover { background: #d68910; }
-        
+    .profile-btn { background: #3498db; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; margin: 2px; }
+    .profile-btn:hover { background: #2980b9; }
     .error { color: #e74c3c; text-align: center; font-size: 14px; margin-top: 10px; }
-    .stats {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 15px; margin-bottom: 25px;
-    }
-    .stat-card {
-      background: white; padding: 20px;
-      border-radius: 15px; text-align: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+    .stat-card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
     .stat-card h3 { font-size: 28px; color: #667eea; }
     .stat-card p { color: #7f8c8d; font-size: 14px; }
+
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+    .modal.active { display: flex; }
+    .modal-card { background: white; padding: 30px; border-radius: 15px; width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-card h2 { color: #2c3e50; margin-bottom: 20px; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    .modal-grid input, .modal-grid select {
+      width: 100%; padding: 10px; border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px;
+    }
+    .modal-grid input:focus { outline: none; border-color: #667eea; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 15px; }
+    .btn-cancel { background: #e0e0e0; color: #2c3e50; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; flex: 1; }
+    .profile-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea; }
+    .photo-placeholder { width: 80px; height: 80px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 30px; }
   </style>
 </head>
 <body>
@@ -171,7 +84,6 @@
   <!-- AUTH SECTION -->
   <div class="auth-container" id="authSection">
     <div class="auth-card">
-      <!-- Login Form -->
       <div id="loginForm">
         <h1>🎓 Welcome Back</h1>
         <p>Student Result Management System</p>
@@ -191,10 +103,9 @@
         <p class="error" id="loginError"></p>
       </div>
 
-      <!-- Register Form -->
       <div id="registerForm" style="display:none;">
         <h1>📝 Create Account</h1>
-        <p>Register as an admin</p>
+        <p>Register as admin, teacher or student</p>
         <div class="form-group">
           <label>Username</label>
           <input type="text" id="regUsername" placeholder="Choose username" />
@@ -202,6 +113,14 @@
         <div class="form-group">
           <label>Password</label>
           <input type="password" id="regPassword" placeholder="Choose password" />
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select id="regRole">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
         </div>
         <button class="btn btn-primary" onclick="register()">Register</button>
         <div class="switch-text">
@@ -213,7 +132,7 @@
     </div>
   </div>
 
-  <!-- DASHBOARD SECTION -->
+  <!-- DASHBOARD -->
   <div class="dashboard" id="dashboard">
     <div class="navbar">
       <h2>🎓 Student Result Management System</h2>
@@ -223,34 +142,13 @@
     <div class="main-content">
       <!-- Stats -->
       <div class="stats">
-        <div class="stat-card">
-          <h3 id="totalStudents">0</h3>
-          <p>Total Students</p>
-        </div>
-        <div class="stat-card">
-          <h3 id="totalPass">0</h3>
-          <p>Passed</p>
-        </div>
-        <div class="stat-card">
-          <h3 id="totalFail">0</h3>
-          <p>Failed</p>
-        </div>
-      </div>
-      <!-- Import Excel -->
-      <div class="form-card">
-        <h2>📊 Import Students from Excel</h2>
-        <p style="color:#7f8c8d; margin-bottom:15px; font-size:14px;">
-          Excel file mein columns hone chahiye: Name, Roll Number, Subject1, Subject2, Subject3, Subject4, Subject5
-        </p>
-        <input type="file" id="excelFile" accept=".xlsx"
-          style="margin-bottom:15px; padding:10px; border:2px dashed #667eea;
-          border-radius:8px; width:100%; cursor:pointer;" />
-        <button class="btn-add" onclick="importExcel()">📥 Import Excel</button>
-        <p id="importMessage" style="margin-top:10px; color:#27ae60; font-weight:bold;"></p>
+        <div class="stat-card"><h3 id="totalStudents">0</h3><p>Total Students</p></div>
+        <div class="stat-card"><h3 id="totalPass">0</h3><p>Passed</p></div>
+        <div class="stat-card"><h3 id="totalFail">0</h3><p>Failed</p></div>
       </div>
 
-      <!-- Add Student Form -->
-      <div class="form-card">
+      <!-- Add Student Form (sirf teacher/admin) -->
+      <div class="form-card" id="addStudentSection">
         <h2>➕ Add New Student</h2>
         <div class="form-grid">
           <input type="text" id="name" placeholder="Student Name" />
@@ -264,20 +162,102 @@
         <button class="btn-add" onclick="addStudent()">Add Student</button>
       </div>
 
+      <!-- Import Excel (sirf teacher/admin) -->
+      <div class="form-card" id="importSection">
+        <h2>📊 Import Students from Excel</h2>
+        <p style="color:#7f8c8d; margin-bottom:15px; font-size:14px;">
+          Columns: Name, Roll No, Subject1, Subject2, Subject3, Subject4, Subject5
+        </p>
+        <input type="file" id="excelFile" accept=".xlsx"
+          style="margin-bottom:15px; padding:10px; border:2px dashed #667eea; border-radius:8px; width:100%; cursor:pointer;" />
+        <button class="btn-add" onclick="importExcel()">📥 Import Excel</button>
+        <p id="importMessage" style="margin-top:10px; color:#27ae60; font-weight:bold;"></p>
+      </div>
+
       <!-- Students Table -->
       <table>
         <thead>
           <tr>
+            <th>Photo</th>
             <th>Name</th>
             <th>Roll No</th>
             <th>Percentage</th>
             <th>Grade</th>
             <th>Result</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="studentTable"></tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- PROFILE MODAL -->
+  <div class="modal" id="profileModal">
+    <div class="modal-card">
+      <h2>👤 Student Profile</h2>
+      <input type="hidden" id="profileStudentId" />
+
+      <div style="text-align:center; margin-bottom:20px;">
+        <div id="profilePhotoPreview" class="photo-placeholder">👤</div>
+        <input type="file" id="profilePhoto" accept=".jpg,.jpeg,.png"
+          style="margin-top:10px;" onchange="previewPhoto(this)" />
+      </div>
+
+      <div class="modal-grid">
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Gender</label>
+          <select id="profileGender">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Date of Birth</label>
+          <input type="date" id="profileDob" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Blood Group</label>
+          <select id="profileBloodGroup">
+            <option value="">Select</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>O+</option><option>O-</option>
+            <option>AB+</option><option>AB-</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Phone</label>
+          <input type="text" id="profilePhone" placeholder="Phone number" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Email</label>
+          <input type="text" id="profileEmail" placeholder="Email" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Address</label>
+          <input type="text" id="profileAddress" placeholder="Address" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Parent Name</label>
+          <input type="text" id="profileParentName" placeholder="Parent name" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Parent Phone</label>
+          <input type="text" id="profileParentPhone" placeholder="Parent phone" />
+        </div>
+        <div>
+          <label style="font-size:13px; color:#7f8c8d;">Parent Email</label>
+          <input type="text" id="profileParentEmail" placeholder="Parent email" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-add" onclick="saveProfile()" style="flex:1;">Save Profile</button>
+      </div>
     </div>
   </div>
 
@@ -286,7 +266,6 @@
     let token = localStorage.getItem('token');
     let userRole = localStorage.getItem('role') || 'student';
 
-    // Page load pe check karo token hai ke nahi
     window.onload = () => {
       if (token) showDashboard();
     };
@@ -304,14 +283,15 @@
     async function register() {
       const username = document.getElementById('regUsername').value;
       const password = document.getElementById('regPassword').value;
+      const role = document.getElementById('regRole').value;
       const res = await fetch(`${API}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, role })
       });
       const data = await res.json();
       if (res.ok) {
-        alert('Registered successfully! Please login.');
+        alert('Registered! Please login.');
         showLogin();
       } else {
         document.getElementById('registerError').textContent = data.message;
@@ -350,6 +330,12 @@
     function showDashboard() {
       document.getElementById('authSection').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
+
+      // Role based sections
+      const isTeacherOrAdmin = userRole === 'teacher' || userRole === 'admin';
+      document.getElementById('addStudentSection').style.display = isTeacherOrAdmin ? 'block' : 'none';
+      document.getElementById('importSection').style.display = isTeacherOrAdmin ? 'block' : 'none';
+
       loadStudents();
     }
 
@@ -371,16 +357,22 @@
       tbody.innerHTML = '';
 
       let pass = 0, fail = 0;
+      const isTeacherOrAdmin = userRole === 'teacher' || userRole === 'admin';
+
       students.forEach(s => {
         const total = s.subject1 + s.subject2 + s.subject3 + s.subject4 + s.subject5;
         const percentage = ((total / 500) * 100).toFixed(2);
         const grade = getGrade(percentage);
         const result = percentage >= 40 ? 'Pass' : 'Fail';
         if (result === 'Pass') pass++; else fail++;
-        const isTeacherOrAdmin = userRole === 'teacher' || userRole === 'admin';
+
+        const photoHTML = s.photo
+          ? `<img src="${s.photo}" class="profile-photo" />`
+          : `<div class="photo-placeholder">👤</div>`;
 
         tbody.innerHTML += `
           <tr>
+            <td>${photoHTML}</td>
             <td>${s.name}</td>
             <td>${s.rollNumber}</td>
             <td>${percentage}%</td>
@@ -388,6 +380,7 @@
             <td><span class="badge badge-${result.toLowerCase()}">${result}</span></td>
             <td>
               <button class="download-btn" onclick="downloadResult('${s._id}')">📄 Result</button>
+              <button class="profile-btn" onclick="openProfile('${s._id}')">👤 Profile</button>
               ${isTeacherOrAdmin ? `
                 <button class="edit-btn" onclick="editStudent('${s._id}', ${s.subject1}, ${s.subject2}, ${s.subject3}, ${s.subject4}, ${s.subject5})">✏️ Edit</button>
                 <button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button>
@@ -413,42 +406,19 @@
       };
       await fetch(`${API}/students`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(data)
       });
       loadStudents();
     }
 
     async function deleteStudent(id) {
+      if (!confirm('Are you sure?')) return;
       await fetch(`${API}/students/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
       loadStudents();
-    }
-    async function importExcel() {
-      const file = document.getElementById('excelFile').files[0];
-      if (!file) {
-        alert('Pehle Excel file select karo!');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const res = await fetch(`${API}/import`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
-      });
-      const data = await res.json();
-      document.getElementById('importMessage').textContent = data.message;
-      loadStudents();
-    }
-    function downloadResult(id) {
-      window.open(`${API}/result/${id}?token=${token}`, '_blank');
     }
 
     function editStudent(id, s1, s2, s3, s4, s5) {
@@ -457,23 +427,109 @@
       const newS3 = prompt('Subject 3 marks:', s3);
       const newS4 = prompt('Subject 4 marks:', s4);
       const newS5 = prompt('Subject 5 marks:', s5);
-
       if (newS1 && newS2 && newS3 && newS4 && newS5) {
         fetch(`${API}/students/${id}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({
-            subject1: Number(newS1),
-            subject2: Number(newS2),
-            subject3: Number(newS3),
-            subject4: Number(newS4),
-            subject5: Number(newS5)
+            subject1: Number(newS1), subject2: Number(newS2),
+            subject3: Number(newS3), subject4: Number(newS4), subject5: Number(newS5)
           })
         }).then(() => loadStudents());
       }
+    }
+
+    function downloadResult(id) {
+      window.open(`${API}/result/${id}?token=${token}`, '_blank');
+    }
+
+    // Profile Modal
+    async function openProfile(id) {
+      document.getElementById('profileStudentId').value = id;
+      const res = await fetch(`${API}/profile/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const student = await res.json();
+
+      document.getElementById('profileGender').value = student.gender || '';
+      document.getElementById('profileDob').value = student.dob || '';
+      document.getElementById('profileBloodGroup').value = student.bloodGroup || '';
+      document.getElementById('profilePhone').value = student.phone || '';
+      document.getElementById('profileEmail').value = student.email || '';
+      document.getElementById('profileAddress').value = student.address || '';
+      document.getElementById('profileParentName').value = student.parentName || '';
+      document.getElementById('profileParentPhone').value = student.parentPhone || '';
+      document.getElementById('profileParentEmail').value = student.parentEmail || '';
+
+      const preview = document.getElementById('profilePhotoPreview');
+      if (student.photo) {
+        preview.outerHTML = `<img src="${student.photo}" class="profile-photo" id="profilePhotoPreview" />`;
+      }
+
+      document.getElementById('profileModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('profileModal').classList.remove('active');
+    }
+
+    function previewPhoto(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const preview = document.getElementById('profilePhotoPreview');
+          preview.outerHTML = `<img src="${e.target.result}" class="profile-photo" id="profilePhotoPreview" />`;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    async function saveProfile() {
+      const id = document.getElementById('profileStudentId').value;
+      const formData = new FormData();
+
+      formData.append('gender', document.getElementById('profileGender').value);
+      formData.append('dob', document.getElementById('profileDob').value);
+      formData.append('bloodGroup', document.getElementById('profileBloodGroup').value);
+      formData.append('phone', document.getElementById('profilePhone').value);
+      formData.append('email', document.getElementById('profileEmail').value);
+      formData.append('address', document.getElementById('profileAddress').value);
+      formData.append('parentName', document.getElementById('profileParentName').value);
+      formData.append('parentPhone', document.getElementById('profileParentPhone').value);
+      formData.append('parentEmail', document.getElementById('profileParentEmail').value);
+
+      const photo = document.getElementById('profilePhoto').files[0];
+      if (photo) formData.append('photo', photo);
+
+      const res = await fetch(`${API}/profile/${id}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Profile saved successfully!');
+        closeModal();
+        loadStudents();
+      } else {
+        alert(data.message);
+      }
+    }
+
+    async function importExcel() {
+      const file = document.getElementById('excelFile').files[0];
+      if (!file) { alert('Pehle Excel file select karo!'); return; }
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch(`${API}/import`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('importMessage').textContent = data.message;
+      loadStudents();
     }
   </script>
 </body>
