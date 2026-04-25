@@ -143,6 +143,14 @@
       font-size: 12px; margin-left: 5px;
     }
     .download-btn:hover { background: #219a52; }
+
+    .edit-btn {
+      background: #f39c12; color: white;
+      border: none; padding: 6px 14px;
+      border-radius: 6px; cursor: pointer;
+      font-size: 12px; margin-left: 5px;
+    }
+    .edit-btn:hover { background: #d68910; }
         
     .error { color: #e74c3c; text-align: center; font-size: 14px; margin-top: 10px; }
     .stats {
@@ -276,6 +284,7 @@
   <script>
     const API = 'http://localhost:5000/api';
     let token = localStorage.getItem('token');
+    let userRole = localStorage.getItem('role') || 'student';
 
     // Page load pe check karo token hai ke nahi
     window.onload = () => {
@@ -320,7 +329,9 @@
       const data = await res.json();
       if (res.ok) {
         token = data.token;
+        userRole = data.role;
         localStorage.setItem('token', token);
+        localStorage.setItem('role', userRole);
         showDashboard();
       } else {
         document.getElementById('loginError').textContent = data.message;
@@ -329,7 +340,9 @@
 
     function logout() {
       localStorage.removeItem('token');
+      localStorage.removeItem('role');
       token = null;
+      userRole = null;
       document.getElementById('dashboard').style.display = 'none';
       document.getElementById('authSection').style.display = 'flex';
     }
@@ -364,6 +377,8 @@
         const grade = getGrade(percentage);
         const result = percentage >= 40 ? 'Pass' : 'Fail';
         if (result === 'Pass') pass++; else fail++;
+        const isTeacherOrAdmin = userRole === 'teacher' || userRole === 'admin';
+
         tbody.innerHTML += `
           <tr>
             <td>${s.name}</td>
@@ -372,8 +387,11 @@
             <td>${grade}</td>
             <td><span class="badge badge-${result.toLowerCase()}">${result}</span></td>
             <td>
-              <button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button>
               <button class="download-btn" onclick="downloadResult('${s._id}')">📄 Result</button>
+              ${isTeacherOrAdmin ? `
+                <button class="edit-btn" onclick="editStudent('${s._id}', ${s.subject1}, ${s.subject2}, ${s.subject3}, ${s.subject4}, ${s.subject5})">✏️ Edit</button>
+                <button class="delete-btn" onclick="deleteStudent('${s._id}')">Delete</button>
+              ` : ''}
             </td>
           </tr>`;
       });
@@ -431,6 +449,31 @@
     }
     function downloadResult(id) {
       window.open(`${API}/result/${id}?token=${token}`, '_blank');
+    }
+
+    function editStudent(id, s1, s2, s3, s4, s5) {
+      const newS1 = prompt('Subject 1 marks:', s1);
+      const newS2 = prompt('Subject 2 marks:', s2);
+      const newS3 = prompt('Subject 3 marks:', s3);
+      const newS4 = prompt('Subject 4 marks:', s4);
+      const newS5 = prompt('Subject 5 marks:', s5);
+
+      if (newS1 && newS2 && newS3 && newS4 && newS5) {
+        fetch(`${API}/students/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            subject1: Number(newS1),
+            subject2: Number(newS2),
+            subject3: Number(newS3),
+            subject4: Number(newS4),
+            subject5: Number(newS5)
+          })
+        }).then(() => loadStudents());
+      }
     }
   </script>
 </body>

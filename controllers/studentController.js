@@ -50,4 +50,28 @@ exports.deleteStudent = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+
+  
+
+};
+
+// Student marks update karo
+exports.updateStudent = async (req, res) => {
+  try {
+    const { subject1, subject2, subject3, subject4, subject5 } = req.body;
+    
+    const student = await Student.findByIdAndUpdate(
+      req.params.id,
+      { subject1, subject2, subject3, subject4, subject5 },
+      { new: true }
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    res.json({ message: 'Marks updated successfully', student });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
